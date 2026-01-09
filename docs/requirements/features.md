@@ -76,7 +76,7 @@
 - 対象画面
   単語詳細画面
 - API
-  PUT /words{id}
+  PUT /words/{id}
 - 備考
   カスタマイズモードのみ可能
 
@@ -87,7 +87,7 @@
 - 対象画面
   単語詳細画面
 - API
-  DELETE /words{id}
+  DELETE /words/{id}
 
 ---
 
