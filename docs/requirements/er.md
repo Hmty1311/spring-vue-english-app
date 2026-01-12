@@ -4,7 +4,7 @@
 erDiagram
     USERS {
         BIGINT id PK
-        VARCHAR email
+        VARCHAR login_id
         VARCHAR password
         VARCHAR name
         TIMESTAMP created_date
