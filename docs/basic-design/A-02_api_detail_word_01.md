@@ -1,6 +1,4 @@
-# A-02 API詳細定義書
-
-## WORD-01 単語一覧取得 API
+# A-02 API詳細定義書 | WORD-01 単語一覧取得
 
 ---
 
@@ -13,7 +11,7 @@
 | Method | GET |
 | Endpoint | `/api/words` |
 | 認証 | 必須(ログインユーザー) |
-| 権限 | 自分の単語のみ取得狩野 |
+| 権限 | 自分の単語のみ取得可能 |
 
 ---
 
@@ -35,13 +33,23 @@
 | 3 | keyword | String | 任意 | 英単語・意味の部分一致 |
 | 4 | page | Integer | 任意 | ページ番号(0始まり) |
 | 5 | size | Integer | 任意 | 1ページ件数(デフォルト20) |
-| 6 | sort | String | 任意 | 並び順(例: `creaedAt,desc`) |
+| 6 | sort | String | 任意 | 並び順(例: `createdAt,desc`) |
 
 ---
 
 ## 4. レスポンス
 
 ### 4-1. Response Body(成功時)
+
+| 項目名 | 型 | 説明 |
+| --- | -- | -- |
+| wordId | Long | 単語ID |
+| english | String | 英単語 |
+| meaning | String | 日本語訳 |
+| memorized | Boolean | 暗記済みフラグ |
+| tags | Array | 紐付けタグ一覧|
+| createdAt | LocalDateTime | 登録日時 |
+
 ```json
 {
     "content": [
@@ -66,34 +74,33 @@
 }
 ```
 
+### 4-2. Response Body(失敗時)
+
+| 項目 | 型 | 説明 |
+| -- | -- | -- |
+| errorCode | String | エラーコード |
+| message | String | エラーメッセージ |
+
+```json
+{
+    "errorCode": "UNAUTHORIZED",
+    "message": "認証が必要です"
+}
+```
+
 ---
 
-## 5. レスポンス項目説明
-
-### 単語情報
-
-| 項目名 | 型 | 説明 |
-| --- | -- | -- |
-| wordId | Long | 単語ID |
-| english | String | 英単語 |
-| meaning | String | 日本語訳 |
-| memorized | Boolean | 暗記済みフラグ |
-| tags | Array | 紐付けタグ一覧|
-| createdAt | LocatedDateTime | 登録日時 |
-
----
-
-## 6. ステータスコード
+## 5. ステータスコード
 
 | ステータス | 内容 |
 | --- | --- |
 | 200 OK | 正常取得 |
-| 402 Unauthorized | 未ログイン |
+| 401 Unauthorized | 未ログイン |
 | 500 Internal Server Error | 予期せぬエラー |
 
 ---
 
-## 7. バリデーション•制約
+## 6. バリデーション•制約
 
 | 項目 | 内容 |
 | --- | --- |
@@ -103,7 +110,7 @@
 
 ---
 
-## 8. 処理概要(内部)
+## 7. 処理概要(内部)
 
 1. 認証情報からログインユーザーID取得
 2. 検索条件(タグ・暗記・キーワード)組み立て
@@ -113,10 +120,3 @@
 6. レスポンスDTOに変換して返却
 
 ---
-
-## 9. 関連ドキュメント
-
-- B-05 API設計書
-- A-01 画面×API対応表
-- B-03 テーブル定義書
-- B-04 ER図
