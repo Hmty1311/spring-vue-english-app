@@ -18,7 +18,6 @@
 ## 2. 概要
 
 指定された単語IDに対する英単語の詳細情報を取得する。
-単語情報に加え、紐づくタグ情報もあわせて返却する。
 
 ---
 
@@ -38,28 +37,23 @@
 
 | 項目名 | 型 | 説明 |
 | --- | -- | -- |
-| wordOd | Long | 単語ID |
-| meaning | String | 英単語 | 
-| english | String | 日本語訳 |
+| wordId | Long | 単語ID |
+| word | String | 英単語 | 
+| meaning | String | 日本語訳 |
 | example | String | 例文 |
 | memorized | Boolean | 暗記済みフラグ |
-| tags | Array | 紐づけタグ一覧 |
+| tagIds | List<Long> | 紐づけタグID一覧 |
 | createdAt | LocalDateTime | 登録日時 |
 | updatedAt | LocalDateTime | 更新日時 |
 
 ```json
 {
     "wordId": 1,
-    "english": "apple",
+    "word": "apple",
     "meaning": "りんご",
     "example": "I eat an apple every day.",
     "memorized": false,
-    "tags": [
-        {
-            "tagId": 1,
-            "tagName": "食べ物"
-        }
-    ],
+    "tagIds": [1],
     "createdAt": "2026-01-01T10:00:00",
     "updatedAt": "2026-01-01T10:00:00"
 }
@@ -102,7 +96,7 @@
 
 ## 7. 処理概要（内部）
 
-1. 人相情報からログインユーザーIDを取得
+1. 認証情報からログインユーザーIDを取得
 2. Path Parameterから単語IDを取得
 3. ユーザーIDでデータスコープを制限
 4. 単語及び紐づくタグ情報を取得
