@@ -42,35 +42,33 @@
 ### 4-1. Response Body(成功時)
 
 | 項目名 | 型 | 説明 |
-| --- | -- | -- |
+| --- | --- | --- |
 | wordId | Long | 単語ID |
-| english | String | 英単語 |
+| word | String | 英単語 |
 | meaning | String | 日本語訳 |
+| example | String | 例文 |
 | memorized | Boolean | 暗記済みフラグ |
-| tags | Array | 紐付けタグ一覧|
+| tagIds | List<Long> | 紐づけタグID一覧 |
 | createdAt | LocalDateTime | 登録日時 |
-
+| updatedAt | LocalDateTime | 更新日時 |
 ```json
 {
-    "content": [
-        {
-            "wordId": 1,
-            "english": "apple",
-            "meaning": "りんご",
-            "memorized": false,
-            "tags": [
-                {
-                    "tagId": 1,
-                    "tagName": "食べ物"
-                }
-            ],
-            "createdAt": "2026-01-01T10:00:00"
-        }
-    ],
-    "page": 0,
-    "size": 20,
-    "totalElements": 35,
-    "totalPages": 2
+  "content": [
+    {
+      "wordId": 1,
+      "word": "apple",
+      "meaning": "りんご",
+      "example": "I eat an apple every day.",
+      "memorized": false,
+      "tagIds": [1],
+      "createdAt": "2026-01-01T10:00:00",
+      "updatedAt": "2026-01-01T10:00:00"
+    }
+  ],
+  "page": 0,
+  "size": 20,
+  "totalElements": 35,
+  "totalPages": 2
 }
 ```
 
