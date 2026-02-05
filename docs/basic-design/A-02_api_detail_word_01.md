@@ -24,7 +24,11 @@
 
 ## 3. リクエスト
 
-### 3-1. Query Parameters
+### 3-1. Path Parameters
+
+なし
+
+### 3-2. Query Parameters
 
 | No | パラメータ名 | 型 | 必須 | 説明 |
 | -- | --- | --- | --- | --- |
@@ -34,6 +38,10 @@
 | 4 | page | Integer | 任意 | ページ番号(0始まり) |
 | 5 | size | Integer | 任意 | 1ページ件数(デフォルト20) |
 | 6 | sort | String | 任意 | 並び順(例: `createdAt,desc`) |
+
+### 3-3. Request Body
+
+なし
 
 ---
 

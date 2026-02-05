@@ -29,6 +29,14 @@
 | -- | --- | --- | --- | --- |
 | 1 | wordId | Long | 必須 | 単語ID |
 
+### 3-2. Query Parameters
+
+なし
+
+### 3-3. Request Body
+
+なし
+
 ---
 
 ## 4. レスポンス
