@@ -37,8 +37,7 @@
 
 | No | 操作内容 | API ID | Method | Endpoint | 備考 |
 | -- | --- | --- | --- | --- | --- |
-| 1 | 単語一覧表示 | WORD-01 | GET | `/words` | タグ・暗記フラグ条件 |
-| 2 | タグ一覧取得 | TAG-01 | GET | `/tags` | 絞り込み用 |
+| 1 | 単語一覧表示 | WORD-01 | GET | `/words` | 暗記フラグ条件 |
 
 ---
 
@@ -47,7 +46,6 @@
 | No | 操作内容 | API ID | Method | Endpoint | 備考 |
 | -- | --- | --- | --- | --- | --- |
 | 1 | 単語登録 | WORD-03 | POST | `/words` | 辞書API連携含む |
-| 2 | タグ一覧取得 | TAG-01 | GET | `/tags` | タグ選択用 |
 
 ---
 
@@ -58,8 +56,6 @@
 | 1 | 単語詳細取得 | WORD-02 | GET | `/words/{wordId}` | 初期表示 |
 | 2 | 単語更新 | WORD-04 | PUT | `/words/{wordId}` | 編集保存 |
 | 3 | 単語削除 | WORD-05 | DELETE | `/words/{wordId}` | 論理削除 |
-| 4 | タグ付与 | WT-01 | POST | `/words/{wordId}/tags` | |
-| 5 | タグ解除 | WT-02 | DELETE | `/words/{wordId}/tags/{tagId}` | |
 
 ---
 
@@ -77,17 +73,6 @@
 | No | 操作内容 | API ID | Method | Endpoint | 備考 |
 | -- | --- | --- | --- | --- | --- |
 | 1 | 学習履歴取得 | QUIZ-03 | GET | `/quiz-results` | 一覧表示 |
-
----
-
-### S-08 タグ管理画面
-
-| No | 操作内容 | API ID | Method | Endpoint | 備考 |
-| -- | --- | --- | --- | --- | --- |
-| 1 | タグ一覧取得 | TAG-01 | GET | `/tags` | 初期表示 |
-| 2 | タグ登録 | TAG-02 | POST | `/tags` | |
-| 3 | タグ更新 | TAG-03 | PUT | `/tags/{tagId}` | |
-| 4 | タグ削除 | TAG-04 | DELETE | `/tags/{tagId}` | 論理削除 |
 
 ---
 
