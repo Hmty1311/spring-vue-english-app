@@ -3,14 +3,21 @@
 ## 共通方針
 
 - DB: PostgreSQL
-- 主キー: BIGINT
-- 論理削除: deleted_date IS NOT NULL を削除済みとする
-- 日時カラム: TIMESTAMP
 - 文字コード: UTF-8
+- 主キー: BIGINT GENERATED ALWAYS AS IDENTITY（自動採番）
+- 日付型: TIMESTAMP
+- 論理削除: deleted_date IS NOT NULL を削除済みとする
+- created_date: INSERT時に自動設定
+- updated_date: UPDATE時に自動更新
 
 ---
 
-## USERS（ユーザー）
+## users（ユーザー）
+
+### テーブル概要
+ログイン及び利用者情報を管理する。
+
+### カラム定義
 
 | 物理名 | 論理名 | 型 | PK | FK | NOT NULL | 備考 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -24,7 +31,7 @@
 
 ---
 
-## WORDS（単語）
+## words（単語）
 
 | 物理名 | 論理名 | 型 | PK | FK | NOT NULL | 備考 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -42,5 +49,7 @@
 
 ## 論理削除ルール
 
-- deleted_date IS NULL : 有効データ
-- deleted_date IS NOT NULL : 削除済み
+| 状態 | 条件 |
+| -- | -- |
+| 有効データ | deleted_date IS NULL |
+| 削除済み | deleted_date IS NOT NULL |
