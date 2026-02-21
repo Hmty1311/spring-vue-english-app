@@ -43,37 +43,16 @@
 
 ---
 
-## 5. タグ管理 API
-
-| No | API名 | Method | Endpoint | 説明 |
-| -- | --- | --- | --- | --- |
-| TAG-01 | タグ一覧 | GET | `/tags` | タグ一覧取得 |
-| TAG-02 | タグ登録 | POST | `/tags` | タグ作成 |
-| TAG-03 | タグ更新 | PUT | `/tags/{tagId}` | タグ更新 |
-| TAG-04 | タグ削除 | DELETE | `/tags/{tagId}` | タグ削除 |
-
----
-
-## 6. 単語×タグ関連 API
-
-| No | API名 | Method | Endpoint | 説明 |
-| -- | --- | --- | --- | --- |
-| WT-01 | 単語にタグ付与 | POST | `/words/{wordId}/tags` | 単語にタグを紐付け |
-| WT-02 | 単語のタグ解除 | DELETE | `/words/{wordId}/tags/{tagId}` | タグ紐付け解除 |
-
----
-
-## 7. クイズ・学習 API
+## 5. クイズ・学習 API
 
 | No | API名 | Method | Endpoint | 説明 |
 | --- | --- | --- | --- | --- |
 | QUIZ-01 | クイズ出題取得 | GET | `/quizzes` | クイズ用単語取得 |
 | QUIZ-02 | 学習結果登録 | POST | `/quiz-results` | クイズ結果保存 |
-| QUIZ-03 | 学習履歴取得 | GET | `/quiz-results` | 学習履歴一覧取得 |
 
 ---
 
-## 8. 備考
+## 6. 備考
 
 - 各APIの **Request / Response 詳細**は  
   `api_detail_xxx.md` にて別途定義する

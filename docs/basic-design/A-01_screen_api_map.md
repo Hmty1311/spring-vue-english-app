@@ -72,7 +72,7 @@
 
 | No | 操作内容 | API ID | Method | Endpoint | 備考 |
 | -- | --- | --- | --- | --- | --- |
-| 1 | 学習履歴取得 | QUIZ-03 | GET | `/quiz-results` | 一覧表示 |
+| - | 初期表示 | なし | - | - | POST/quiz-resultsのレスポンスを利用 |
 
 ---
 
