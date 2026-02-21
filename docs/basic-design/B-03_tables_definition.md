@@ -36,7 +36,7 @@
 | 物理名 | 論理名 | 型 | PK | FK | NOT NULL | 備考 |
 | --- | --- | --- | --- | --- | --- | --- |
 | id | 単語ID | BIGINT | ○ | | ○ | |
-| user_id | 所有ユーザーID | BIGINT | | USERS.id | ○ | |
+| user_id | 所有ユーザーID | BIGINT | | users.id | ○ | |
 | word | 英単語 | VARCHAR(100) | | | ○ | |
 | meaning | 意味 | VARCHAR(255) | | | ○ | |
 | example | 例文 | TEXT | | | | |
@@ -44,6 +44,21 @@
 | created_date | 作成日時 | TIMESTAMP | | | ○ | |
 | updated_date | 更新日時 | TIMESTAMP | | | ○ | |
 | deleted_date | 削除日時 | TIMESTAMP | | | | |
+
+---
+
+## quiz_results（学習結果）
+
+| 物理名 | 論理名 | 型 | PK | FK | NOT NULL | 備考 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| id | 結果ID | BIGINT | ○ | | ○ | IDENTITY | |
+| user_id | ユーザーID | BIGINT | | users.id | ○ | | |
+| word_id | 単語ID | BIGINT | | words.id | ○ | | |
+| correct | 正誤フラグ | BOOLEAN | | | ○ | FALSE | |
+| answered_date | 回答日時 | TIMESTAMP | | | ○ | CURRENT_TIMESTAMP | |
+| created_date | 作成日時 | TIMESTAMP | | | ○ | CURRENT_TIMESTAMP | |
+| updated_date | 更新日時 | TIMESTAMP | | | ○ | CURRENT_TIMESTAMP | |
+| deleted_date | 削除日時 | TIMESTAMP | | | | NULL | |
 
 ---
 
