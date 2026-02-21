@@ -23,17 +23,17 @@
 
 ---
 
-## 3. リスエスト
+## 3. リクエスト
 
- ### 3-1. Path Parameters
+### 3-1. Path Parameters
 
- なし
+なし
 
- ### 3-2. Query Parameters
+### 3-2. Query Parameters
 
- なし
+なし
 
- ### 3-3. Request Body
+### 3-3. Request Body
 
 | 項目名 | 型 | 必須 | 説明 |
 | --- | -- | -- | -- |
