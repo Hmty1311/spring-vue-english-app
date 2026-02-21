@@ -7,6 +7,7 @@
 | 項目 | 内容 |
 | --- | --- |
 | API ID | WORD-05 |
+| API名 | 単語削除 |
 | Method | DELETE |
 | Endpoint | /api/words/{wordId} |
 | 認証 | 必須（ログインユーザー） |
