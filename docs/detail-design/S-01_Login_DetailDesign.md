@@ -4,9 +4,9 @@
 
 | 種別 | クラス名 | 責務 |
 | -- | -- | -- |
-| Controller | AuthController | ログインAPI受付 |
-| Facade | AuthFacade | 認証処理調整 |
-| Service | AuthService | ユーザー取得および資格情報検証 |
+| Controller | LoginController | ログインAPI受付 |
+| Facade | LoginFacade | 認証処理調整 |
+| Service | LoginService | ユーザー取得および資格情報検証 |
 | Repository | UserRepository | ユーザー取得 |
 | DTO | LoginRequest | 入力 |
 | DTO | LoginResponse | 出力 |
@@ -17,9 +17,9 @@
 
 | クラス | メソッド | 引数 | 戻り値 | 概要 |
 | -- | -- | -- | -- | -- |
-| AuthController | login | LoginRequest | LoginResponse | ログインAPI |
-| AuthFacade | login | String userName, String password | LoginResponse | 認証 + JWT生成 |
-| AuthService | authenticate | String userName, String password | User | 認証処理 |
+| LoginController | login | LoginRequest | LoginResponse | ログインAPI |
+| LoginFacade | login | String userName, String password | LoginResponse | 認証 + JWT生成 |
+| LoginService | authenticate | String userName, String password | User | 認証処理 |
 | UserRepository | findByUserName | String userName | Optional<User> | ユーザ検索 |
 
 ---
@@ -28,17 +28,17 @@
 
 ### 3-1. 正常系
 
-1. AuthController.login(LoginRequest request)が呼び出される
+1. LoginController.login(LoginRequest request)が呼び出される
 2. @Valid により入力チェックを行う
-3. AuthFacade.login(request.getUserName(), request.getPassword()) を呼び出す
-4. AuthService.authenticate(userName, password) を呼び出す
+3. LoginFacade.login(request.getUserName(), request.getPassword()) を呼び出す
+4. LoginService.authenticate(userName, password) を呼び出す
 5. UserRepository.findByUserName(userName) を実行する
 6. ユーザーが存在することを確認する
-7. passwordEncoder.matches(rawPassword, hashedPassword) 実行する
+7. パスワード検証を実施する
 8. 認証成功時、User を返却する
-9. AuthFacade にJWTを生成する
+9. LoginFacadeにてJwtProviderを用いてトークン生成
 10. LoginResponseを生成する
-11. Controllerからレスポンスを返却する
+11. LoginControllerからレスポンスを返却する
 
 ### 3-2. 異常系
 
@@ -69,11 +69,16 @@
 
 ## 5. 例外設計
 
+AuthenticationException は独自業務例外とする。
+RuntimeException を継承し、認証失敗時にスローする。
+
 | 条件 | 例外クラス | HTTP |
 | -- | -- | -- |
 | ユーザー未登録 | AuthenticationException | 401 |
 | パスワード不一致 | AuthenticationException | 401 |
 | 入力不正 | MethodArgumentNotValidException | 400 |
+
+※HTTPステータス変換は GlobalExceptionHandler にて行う。
 
 ---
 
@@ -81,7 +86,7 @@
 
 | メソッド | @Transactional | readOnly |
 | -- | -- | -- |
-| authenticate | なし | - |
+| authenticate | あり | true |
 | login | なし | - |
 
 ※更新処理無し、読み取りのみであるため
