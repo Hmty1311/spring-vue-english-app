@@ -32,12 +32,10 @@
 
 | No | パラメータ名 | 型 | 必須 | 説明 |
 | -- | --- | --- | --- | --- |
-| 1 | tagId | Long | 任意 | 指定タグで絞り込み |
-| 2 | memorized | Boolean | 任意 | 暗記済みフラグ |
-| 3 | keyword | String | 任意 | 英単語・意味の部分一致 |
-| 4 | page | Integer | 任意 | ページ番号(0始まり) |
-| 5 | size | Integer | 任意 | 1ページ件数(デフォルト20) |
-| 6 | sort | String | 任意 | 並び順(例: `createdAt,desc`) |
+| 1 | keyword | String | 任意 | 単語検索キーワード |
+| 2 | memorized | boolean | 任意 | 暗記済フィルタ |
+| 3 | page | integer | 任意 | ページ番号 |
+| 4 | size | integer | 任意 | 取得件数 |
 
 ### 3-3. Request Body
 
