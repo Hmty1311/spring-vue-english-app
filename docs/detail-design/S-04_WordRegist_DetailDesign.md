@@ -24,7 +24,6 @@
 | WordRepository | save | Word | Word | 単語保存 |
 | WordRepository | existsByUserIdAndWord | Long userId, String word | boolean | 同一単語存在チェック |
 
-
 ---
 
 ## 3. 処理フロー
