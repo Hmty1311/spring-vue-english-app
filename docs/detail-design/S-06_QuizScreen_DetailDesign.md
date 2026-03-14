@@ -1,4 +1,4 @@
-# 詳細設計書 | S-06 単クイズ画面
+# 詳細設計書 | S-06 単語クイズ画面
 
 ## 1. 対象クラス
 
@@ -117,6 +117,7 @@ Service層で実施
 | 単語が存在しない | ResourceNotFoundException | 404 | - |
 | 他ユーザーの単語 | AccessDeniedException | 403 | - |
 | バリデーションエラー | MethodArgumentNotValidException | 400 | - |
+
 ---
 
 ## 6. トランザクション設計
