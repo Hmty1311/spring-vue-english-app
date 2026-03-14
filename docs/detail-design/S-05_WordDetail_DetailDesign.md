@@ -88,7 +88,6 @@
 3. 401 Unauthorized を返却する
 4. Controllerには到達しない
 
-
 ---
 
 ## 4. バリデーション実装方針
@@ -128,7 +127,6 @@ Service層で実施
 
 | クラス | @Transactional | readOnly |
 | -- | -- | -- |
-| WordDetailService | あり | false |
 | WordDetailService | あり | false |
 
 ---
