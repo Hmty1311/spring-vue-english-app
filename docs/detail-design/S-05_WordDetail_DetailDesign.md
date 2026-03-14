@@ -5,8 +5,11 @@
 | 種別 | クラス名 | 責務 |
 | -- | -- | -- |
 | Controller | WordUpdateController | 単語更新API受付 |
+| Controller | WordDeleteController | 単語削除API受付 |
 | Facade | WordUpdateFacade | 単語更新処理調整およびDTO変換 |
+| Facade | WordDeleteFacade | 単語削除処理調整 |
 | Service | WordUpdateService | 単語更新処理 |
+| Service | WordDeleteService | 単語削除処理 |
 | Repository | WordRepository | 単語データアクセス |
 | DTO | WordUpdateRequest | 単語更新リクエスト |
 | DTO | WordResponse | 更新単語レスポンス |
@@ -19,21 +22,25 @@
 | クラス | メソッド | 引数 | 戻り値 | 概要 |
 | -- | -- | -- | -- | -- |
 | WordUpdateController | updateWord | Long wordId, WordUpdateRequest | WordResponse | 単語更新API |
+| WordDeleteController | deleteWord | Long wordId | void | 単語削除API |
 | WordUpdateFacade | updateWord | Long userId, Long wordId, WordUpdateRequest | WordResponse | 単語更新 |
+| WordDeleteFacade | deleteWord | Long userId, Long wordId | void | 単語削除 |
 | WordUpdateService | updateWord | Long userId, Long wordId, WordUpdateRequest | Word | 単語更新処理 |
-| WordRepository | findById | Long id | Optional<Word> | 単語取得 |
+| WordDeleteService | deleteWord | Long userId, Long wordId | void | 単語論理削除 |
+| WordRepository | findByIdAndDeletedFalse | Long id | Optional<Word> | 単語取得 |
 | WordRepository | save | Word | Word | 単語更新 |
 
 ---
 
 ## 3. 処理フロー
 
-### 3-1. 正常系
+### 3-1. 単語更新
+#### 3-1-1. 正常系
 1. WordUpdateController.updateWord(wordId, request) が呼び出される
 2. Controllerにて SecurityContext から認証済みユーザーIDを取得する
 3. WordUpdateFacade.updateWord(userId, wordId, request) を呼び出す
 4. WordUpdateService.updateWord(userId, wordId, request) を呼び出す
-5. WordRepository.findById(wordId) を実行する
+5. WordRepository.findByIdAndDeletedFalse(wordId) を実行する
 6. 該当単語が存在しない場合
    ResourceNotFoundException をスローする
 7. 取得したWordの userId とログインユーザーIDを比較する
@@ -51,12 +58,38 @@
 12. FacadeにてWord → WordResponseに変換する
 13. Controllerからレスポンス返却
 
-### 3-2. 異常系
-### 未認証
+#### 3-1-2. 異常系
+##### 未認証
 1. リクエストにJWTが存在しない、または不正なJWTである
 2. SecurityFilterにて認証エラーを検知する
 3. 401 Unauthorized を返却する
 4. Controllerには到達しない
+
+### 3-2. 単語削除
+#### 3-2-1. 正常系
+1. WordDeleteController.deleteWord(wordId) が呼び出される
+2. Controllerで SecurityContext からユーザーID取得
+3. WordDeleteFacade.deleteWord(userId, wordId) を呼び出す
+4. WordDeleteService.deleteWord(userId, wordId) を呼び出す
+5. WordRepository.findByIdAndDeletedFalse(wordId) を実行
+6. 存在しない場合
+   `ResourceNotFoundException`
+7. 所有者チェック
+   `word.userId != userId` の場合 `AccessDeniedException`
+8. Wordエンティティを論理削除
+   ```java
+   word.delete();
+   ```
+9. トランザクションコミット時に更新がDBへ反映される
+10. 204 No Contentを返却
+
+#### 3-2-2. 異常系
+##### 未認証
+1. リクエストにJWTが存在しない、または不正なJWTである
+2. SecurityFilterにて認証エラーを検知する
+3. 401 Unauthorized を返却する
+4. Controllerには到達しない
+
 
 ---
 
@@ -77,6 +110,9 @@
 #### チェックタイミング
 Service層で実施
 
+※削除は入力パラメータなしのため、バリデーションチェックなし。
+　存在チェック・所有者チェックはService層で実施。
+
 ---
 
 ## 5. 例外設計
@@ -95,6 +131,7 @@ Service層で実施
 | クラス | @Transactional | readOnly |
 | -- | -- | -- |
 | WordUpdateService | あり | false |
+| WordDeleteService | あり | false |
 
 ---
 
