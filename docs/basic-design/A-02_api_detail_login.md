@@ -108,7 +108,7 @@ quiz_result_post も同じ粒度
 
 ## 7. 処理概要
 
-1. リクエストボディの必須項目（loginId, password）を検証する。不足がある場合は400 Bad Requestを返却する。
+1. リクエストボディのひっすこうもく（loginId, password）を検証する。不足がある場合は400 Bad Requestを返却する。
 2. loginIdをキーにusersテーブルを検索する。
 3. 該当ユーザーが存在しない場合は、401 Unauthorized（AUTH-001）を返却する。
 4. 入力されたパスワードと、DBに保存されているハッシュ化パスワードを照合する。
