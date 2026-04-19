@@ -21,7 +21,7 @@
 
 | 物理名 | 論理名 | 型 | PK | FK | NOT NULL | 備考 |
 | --- | --- | --- | --- | --- | --- | --- |
-| id | ユーザーID | BIGINT | ○ | | ○ | |
+| id | ユーザーID | BIGSERIAL | ○ | | ○ | |
 | login_id | ログイン用ID | VARCHAR(16) | | | ○ | UNIQUE |
 | password | ハッシュ化パスワード | VARCHAR(255) | | | ○ | |
 | name | 表示名 | VARCHAR(100) | | | ○ | |
