@@ -2,6 +2,7 @@ package com.engapp.backend.domain.user.facade;
 
 import org.springframework.stereotype.Component;
 
+import com.engapp.backend.common.config.JwtProvider;
 import com.engapp.backend.domain.user.model.User;
 import com.engapp.backend.domain.user.service.LoginService;
 import com.engapp.backend.web.login.dto.LoginResponse;
@@ -10,17 +11,18 @@ import com.engapp.backend.web.login.dto.LoginResponse;
 public class LoginFacade {
 
     private final LoginService loginService;
+    private final JwtProvider jwtProvider;
 
-    public LoginFacade(LoginService loginService) {
+    public LoginFacade(LoginService loginService, JwtProvider jwtProvider) {
         this.loginService = loginService;
+        this.jwtProvider = jwtProvider;
     }
 
     public LoginResponse login(String loginId, String password) {
 
         User user = loginService.authenticate(loginId, password);
 
-        //TODO: JWTはダミー
-        String token = "dummy-token";
+        String token = jwtProvider.generateToken(user);
 
         return new LoginResponse(
             token,
