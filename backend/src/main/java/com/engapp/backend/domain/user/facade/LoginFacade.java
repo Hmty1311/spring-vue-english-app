@@ -7,16 +7,14 @@ import com.engapp.backend.domain.user.model.User;
 import com.engapp.backend.domain.user.service.LoginService;
 import com.engapp.backend.web.login.dto.LoginResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class LoginFacade {
 
     private final LoginService loginService;
     private final JwtProvider jwtProvider;
-
-    public LoginFacade(LoginService loginService, JwtProvider jwtProvider) {
-        this.loginService = loginService;
-        this.jwtProvider = jwtProvider;
-    }
 
     public LoginResponse login(String loginId, String password) {
 

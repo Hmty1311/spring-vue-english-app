@@ -8,14 +8,13 @@ import com.engapp.backend.domain.word.model.Word;
 import com.engapp.backend.domain.word.service.WordService;
 import com.engapp.backend.web.word.dto.WordResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class WordFacade {
 
     private final WordService wordService;
-
-    public WordFacade(WordService wordService){
-        this.wordService = wordService;
-    }
 
     public List<WordResponse> getWords(Long userId){
 

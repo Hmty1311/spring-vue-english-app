@@ -11,16 +11,14 @@ import com.engapp.backend.web.login.dto.LoginRequest;
 import com.engapp.backend.web.login.dto.LoginResponse;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
 
     private final LoginFacade loginFacade;
-
-    public LoginController(LoginFacade loginFacade) {
-        this.loginFacade = loginFacade;
-    }
 
     @PostMapping
     public LoginResponse login(@RequestBody @Valid LoginRequest request) {
