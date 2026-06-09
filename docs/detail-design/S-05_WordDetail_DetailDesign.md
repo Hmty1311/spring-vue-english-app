@@ -5,7 +5,6 @@
 | 種別 | クラス名 | 責務 |
 | -- | -- | -- |
 | Controller | WordDetailController | 単語更新・削除API受付 |
-
 | Facade | WordDetailFacade | 単語更新・削除処理調整およびDTO変換 |
 | Service | WordDetailService | 単語更新・削除処理 |
 | Repository | WordRepository | 単語データアクセス |

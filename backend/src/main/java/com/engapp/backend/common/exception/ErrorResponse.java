@@ -1,9 +1,9 @@
 package com.engapp.backend.common.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class ErrorResponse {
 
