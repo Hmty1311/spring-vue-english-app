@@ -17,7 +17,7 @@ const login = async () => {
   try {
 
     const response = await client.post(
-      "/api/login",
+      "/login",
       {
         loginId: loginId.value,
         password: password.value

@@ -19,7 +19,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(MethodArgumentNotValidException ex){
-        return new ErrorResponse("VALID-001", "入力値が不正です");
+
+        String message = ex.getBindingResult()
+            .getAllErrors()
+            .get(0)
+            .getDefaultMessage();
+
+        return new ErrorResponse("VALID-001", message);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

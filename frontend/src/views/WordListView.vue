@@ -55,6 +55,12 @@ onMounted(fetchWords);
   <div>
     <h1>Word List</h1>
 
+    <div>
+      <RouterLink to="/words/create">
+        Create Word
+      </RouterLink>
+    </div>
+
     <div v-if="errorMessage">
       {{ errorMessage }}
     </div>
