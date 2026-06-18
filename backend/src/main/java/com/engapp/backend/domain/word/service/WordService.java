@@ -88,4 +88,47 @@ public class WordService {
         wordRepository.save(word);
     }
 
+    @Transactional(readOnly = true)
+    public Word getWord(
+        Long id,
+        Long userId
+    ){
+        return wordRepository
+            .findByIdAndUserId(
+                id,
+                 userId
+            )
+            .orElseThrow(() ->
+                new RuntimeException("Word not found"));
+    }
+
+    @Transactional
+    public void updateWord(
+            Long id,
+            Long userId,
+            WordCreateRequest request
+    ){
+
+        System.out.println("update start");
+        Word word =
+            wordRepository
+                .findByIdAndUserId(
+                    id, 
+                    userId
+                )
+                .orElseThrow(() ->
+                    new RuntimeException("Word not found"));
+
+        word.setWord(request.word());
+        word.setMeaning(request.meaning());
+        word.setExample(request.example());
+        word.setMemorized(
+            Boolean.TRUE.equals(
+                request.memorized()
+            )
+        );
+        word.setUpdatedDate(LocalDateTime.now());
+        wordRepository.save(word);
+    }
+
 }

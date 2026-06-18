@@ -9,6 +9,8 @@ import WordListView
   from "../views/WordListView.vue";
 import WordCreateView
   from "../views/WordCreateView.vue";
+import WordEditView
+  from "../views/WordEditView.vue";
 
 const routes = [
   {
@@ -26,6 +28,10 @@ const routes = [
   {
     path: "/words/create",
     component: WordCreateView
+  },
+  {
+    path: "/words/:id/edit",
+    component: WordEditView,
   }
 
 ];

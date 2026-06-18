@@ -46,6 +46,12 @@ const submit = async () => {
     <div>
         <h1>Create Word</h1>
 
+        <div>
+            <RouterLink to="/words">
+                Word List
+            </RouterLink>
+        </div>
+
         <div v-if="errorMessage">
             {{  errorMessage }}
         </div>

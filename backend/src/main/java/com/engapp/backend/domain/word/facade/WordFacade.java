@@ -50,5 +50,29 @@ public class WordFacade {
         wordService.createWord(userId,request);
     }
 
+    public WordResponse getWord(
+        Long id, Long userId
+    ){
+        Word word =
+            wordService.getWord(id, userId);
+
+        return new WordResponse(
+            word.getId(),
+            word.getWord(),
+            word.getMeaning(),
+            word.getExample(),
+            word.getMemorized(),
+            word.getCreatedDate(),
+            word.getUpdatedDate()
+        );
+    }
+
+    public void updateWord(
+        Long id,
+        Long userId,
+        WordCreateRequest request
+    ){
+        wordService.updateWord(id, userId, request);
+    }
 
 }

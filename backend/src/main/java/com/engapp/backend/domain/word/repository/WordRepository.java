@@ -1,6 +1,7 @@
 package com.engapp.backend.domain.word.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,6 @@ public interface WordRepository extends JpaRepository<Word, Long> {
 
     Page<Word> findByUserIdAndWordContainingAndMemorized(Long userId, String keyword, Boolean memorized, Pageable pageable);
 
+    Optional<Word> findByIdAndUserId(Long id, Long userId);
+    
 }

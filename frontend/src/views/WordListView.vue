@@ -97,6 +97,12 @@ onMounted(fetchWords);
           {{ word.word }}
           -
           {{ word.meaning }}
+
+          <RouterLink
+            :to="`/words/${word.wordId}/edit`"
+          >
+          Edit
+          </RouterLink>
         </li>
       </ul>
     </div>
