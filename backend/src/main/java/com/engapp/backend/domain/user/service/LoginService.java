@@ -22,7 +22,12 @@ public class LoginService {
 
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new AuthenticationException("AUTH-001"));
-
+System.out.println("[" + password + "]");
+System.out.println("[" + user.getPassword() + "]");
+System.out.println(passwordEncoder.matches(
+    password,
+    user.getPassword()
+));
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new AuthenticationException("AUTH-001");
         }

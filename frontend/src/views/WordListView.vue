@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from "vue";
 import { fetchWordsApi } from "../api/wordApi";
-import type { Word }
-  from "../types/Word";
+import type { Word } from "../types/Word";
+import { deleteWordApi } from "../api/wordApi";
 
 const words = ref<Word[]>([]);
 
@@ -38,6 +38,21 @@ const fetchWords = async () => {
     } finally {
       loading.value = false;
     }
+};
+
+const deleteWord = async (id: number) => {
+  if (!confirm("Delete this word?")) return;
+
+  try {
+    await deleteWordApi(id);
+
+    // 画面更新
+    await fetchWords();
+
+  } catch (error) {
+    console.error(error);
+    errormessage.value = "Failed to delete word.";
+  }
 };
 
 watch(
@@ -97,12 +112,20 @@ onMounted(fetchWords);
           {{ word.word }}
           -
           {{ word.meaning }}
+          -
+          {{ word.example }}
 
           <RouterLink
             :to="`/words/${word.wordId}/edit`"
           >
           Edit
           </RouterLink>
+
+          <button
+            @click="deleteWord(word.wordId)"
+          >
+            Delete
+          </button>
         </li>
       </ul>
     </div>

@@ -23,3 +23,7 @@ export const updateWordApi = (
         data
     );
 };
+
+export const deleteWordApi = (id: number) => {
+    return client.delete(`/words/${id}`);
+};

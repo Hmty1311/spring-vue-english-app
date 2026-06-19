@@ -131,4 +131,16 @@ public class WordService {
         wordRepository.save(word);
     }
 
+    @Transactional
+    public  void deleteWord(Long id, Long userId){
+
+        Word word = wordRepository.findByIdAndUserId(
+            id, 
+            userId)
+            .orElseThrow(() -> new RuntimeException("Word not found"));
+    
+        wordRepository.delete(word);
+
+    }
+
 }

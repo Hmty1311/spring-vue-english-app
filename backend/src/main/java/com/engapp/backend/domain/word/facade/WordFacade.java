@@ -75,4 +75,8 @@ public class WordFacade {
         wordService.updateWord(id, userId, request);
     }
 
+    public void deleteWord(Long id, Long userId){
+        wordService.deleteWord(id, userId);
+    }
+
 }
