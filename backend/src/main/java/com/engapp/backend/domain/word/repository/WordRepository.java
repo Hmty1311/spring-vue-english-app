@@ -23,4 +23,7 @@ public interface WordRepository extends JpaRepository<Word, Long> {
 
     Optional<Word> findByIdAndUserId(Long id, Long userId);
     
+
+    @Query("""SELECT w FROM Word w WHERE w.userId = :userId AND w.deletedDate IS NULL ORDER BY function('RANDOM')""")
+    List<Word> findRandomWords(Long userId, Pageable pageable);
 }
