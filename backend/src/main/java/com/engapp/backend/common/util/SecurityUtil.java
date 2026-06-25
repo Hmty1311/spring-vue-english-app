@@ -3,8 +3,6 @@ package com.engapp.backend.common.util;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import lombok.RequiredArgsConstructor;
-
    
 public class SecurityUtil {
 

@@ -1,31 +1,28 @@
 package com.engapp.backend.domain.word.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import static java.time.LocalDateTime.now;
 
-import org.springframework.data.convert.ReadingConverter;
+import java.time.LocalDateTime;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import com.engapp.backend.domain.user.model.User;
-import com.engapp.backend.domain.user.service.LoginService;
-import com.engapp.backend.domain.user.service.UserService;
 import com.engapp.backend.domain.word.model.Word;
 import com.engapp.backend.domain.word.repository.WordRepository;
 import com.engapp.backend.web.word.request.WordCreateRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class WordService {
 
     private final WordRepository wordRepository;
-    private final UserService userService;
 
     @Transactional(readOnly = true)
     public Page<Word> getWords(Long userId, String keyword, Boolean memorized, int page, int size){
@@ -71,7 +68,7 @@ public class WordService {
             WordCreateRequest request
     ) {
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = now();
 
         Word word = Word.builder()
                 .userId(userId)
@@ -109,7 +106,7 @@ public class WordService {
             WordCreateRequest request
     ){
 
-        System.out.println("update start");
+        log.debug("update start");
         Word word =
             wordRepository
                 .findByIdAndUserId(
