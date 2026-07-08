@@ -11,6 +11,7 @@ import WordCreateView
   from "../views/WordCreateView.vue";
 import WordEditView
   from "../views/WordEditView.vue";
+import QuizView from "../views/QuizView.vue";
 
 const routes = [
   {
@@ -31,7 +32,11 @@ const routes = [
   },
   {
     path: "/words/:id/edit",
-    component: WordEditView,
+    component: WordEditView
+  },
+  {
+    path: "/quiz",
+    component:QuizView
   }
 
 ];

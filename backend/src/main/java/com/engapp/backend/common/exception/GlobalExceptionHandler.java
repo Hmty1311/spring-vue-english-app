@@ -55,4 +55,15 @@ public class GlobalExceptionHandler {
                     "予期せぬエラーが発生しました"
                 ));
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleResourceNotFoundException(
+        ResourceNotFoundException ex
+    ){
+        return new ErrorResponse(
+                ex.getErrorCode(),
+                "対象データが存在しません。"
+        );
+    }
 }

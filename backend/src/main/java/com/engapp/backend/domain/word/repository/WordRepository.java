@@ -22,8 +22,7 @@ public interface WordRepository extends JpaRepository<Word, Long> {
 
     Page<Word> findByUserIdAndWordContainingAndMemorized(Long userId, String keyword, Boolean memorized, Pageable pageable);
 
-    Optional<Word> findByIdAndUserId(Long id, Long userId);
-    
+    Optional<Word> findByIdAndUserId(Long id, Long userId);    
 
     @Query("""
         SELECT w

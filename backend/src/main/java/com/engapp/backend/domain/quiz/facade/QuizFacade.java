@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.engapp.backend.domain.quiz.service.QuizService;
 import com.engapp.backend.web.quiz.dto.QuizResponse;
+import com.engapp.backend.web.quiz.dto.QuizResultRequest;
+import com.engapp.backend.web.quiz.dto.QuizResultResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,5 +25,16 @@ public class QuizFacade {
             userId,
             count
         );
+    }
+
+    public QuizResultResponse registerQuizResult(
+            Long userId,
+            QuizResultRequest request
+    ){
+        return quizService.registerQuizResult(
+            userId,
+            request
+        );
+
     }
 }
