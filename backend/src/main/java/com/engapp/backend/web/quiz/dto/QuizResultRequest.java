@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 public record QuizResultRequest(
 
     @NotNull
+    Long sessionId,
+
+    @NotNull
     Long wordId,
 
     @NotBlank

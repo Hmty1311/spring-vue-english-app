@@ -22,8 +22,8 @@ public class QuizResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "quiz_session_id", nullable = false)
+    private Long quizSessionId;
 
     @Column(name = "word_id", nullable = false)
     private Long wordId;
@@ -44,14 +44,14 @@ public class QuizResult {
     private LocalDateTime deletedDate;
 
     public static QuizResult create(
-            Long userId,
+            Long quizSessionId,
             Long wordId,
             Boolean correct
     ) {
 
         QuizResult result = new QuizResult();
 
-        result.userId = userId;
+        result.quizSessionId = quizSessionId;
         result.wordId = wordId;
         result.correct = correct;
 

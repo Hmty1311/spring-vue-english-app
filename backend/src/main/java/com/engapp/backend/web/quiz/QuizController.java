@@ -1,7 +1,6 @@
 package com.engapp.backend.web.quiz;
 
 import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.engapp.backend.common.util.SecurityUtil;
 import com.engapp.backend.domain.quiz.facade.QuizFacade;
-import com.engapp.backend.web.quiz.dto.QuizResponse;
+import com.engapp.backend.web.quiz.dto.QuizQuestionResponse;
 import com.engapp.backend.web.quiz.dto.QuizResultRequest;
 import com.engapp.backend.web.quiz.dto.QuizResultResponse;
+import com.engapp.backend.web.quiz.dto.QuizStartResponse;
 
 import org.springframework.http.HttpStatus;
 
@@ -28,8 +28,9 @@ public class QuizController {
 
     private final QuizFacade quizFacade;
 
-    @GetMapping
-    public List<QuizResponse> getQuizzes(
+    @PostMapping("/sessions")
+    @ResponseStatus(HttpStatus.CREATED)
+    public QuizStartResponse startQuiz(
         @RequestParam(defaultValue = "10")
         Integer count
     ){
@@ -37,7 +38,7 @@ public class QuizController {
         Long userId =
             SecurityUtil.getLoginUserId();
 
-        return quizFacade.getQuizzes(
+        return quizFacade.startQuiz(
             userId,
             count
         );

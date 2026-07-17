@@ -2,12 +2,15 @@ package com.engapp.backend.domain.quiz.service;
 
 import com.engapp.backend.common.exception.ResourceNotFoundException;
 import com.engapp.backend.domain.quiz.model.QuizResult;
+import com.engapp.backend.domain.quiz.model.QuizSession;
 import com.engapp.backend.domain.quiz.repository.QuizResultRepository;
+import com.engapp.backend.domain.quiz.repository.QuizSessionRepository;
 import com.engapp.backend.domain.word.model.Word;
 import com.engapp.backend.domain.word.repository.WordRepository;
-import com.engapp.backend.web.quiz.dto.QuizResponse;
+import com.engapp.backend.web.quiz.dto.QuizQuestionResponse;
 import com.engapp.backend.web.quiz.dto.QuizResultRequest;
 import com.engapp.backend.web.quiz.dto.QuizResultResponse;
+import com.engapp.backend.web.quiz.dto.QuizStartResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,35 +31,38 @@ public class QuizService {
 
     private final QuizResultRepository quizResultRepository;
 
-    public List<QuizResponse> getQuizzes(
-        Long userId,
-        Integer count
-    ){
+    private final QuizSessionRepository quizSessionRepository;
 
-        List<Word> quizWords = 
-            wordRepository.findRandomWords(
-                userId,
-                PageRequest.of(0, count)
-            );
+
+    // public List<QuizQuestionResponse> getQuizzes(
+    //     Long userId,
+    //     Integer count
+    // ){
+
+    //     List<Word> quizWords = 
+    //         wordRepository.findRandomWords(
+    //             userId,
+    //             PageRequest.of(0, count)
+    //         );
         
-        List<Word> allWords =
-            wordRepository.findByUserIdAndDeletedDateIsNull(
-                userId
-            );
+    //     List<Word> allWords =
+    //         wordRepository.findByUserIdAndDeletedDateIsNull(
+    //             userId
+    //         );
         
-       return quizWords.stream()
-            .map(word -> 
-                        new QuizResponse(
-                                    word.getId(),
-                                    word.getWord(),
-                                    generateChoices(
-                                        word,
-                                        allWords
-                                    )
-                        )
-            )
-            .toList();
-    }
+    //    return quizWords.stream()
+    //         .map(word -> 
+    //                     new QuizQuestionResponse(
+    //                                 word.getId(),
+    //                                 word.getWord(),
+    //                                 generateChoices(
+    //                                     word,
+    //                                     allWords
+    //                                 )
+    //                     )
+    //         )
+    //         .toList();
+    // }
 
     private List<String> generateChoices(
         Word answerWord,
@@ -86,6 +92,13 @@ public class QuizService {
             QuizResultRequest request
     ) {
 
+        if(!quizSessionRepository.existsByIdAndUserId(
+            request.sessionId(),
+            userId
+        )) {
+            throw new ResourceNotFoundException("QUIZ-01");
+        }
+
         Word word = wordRepository
                 .findByIdAndUserId(
                         request.wordId(),
@@ -101,7 +114,7 @@ public class QuizService {
 
         QuizResult result =
                 QuizResult.create(
-                        userId,
+                        request.sessionId(),
                         word.getId(),
                         correct
                 );
@@ -109,5 +122,60 @@ public class QuizService {
         quizResultRepository.save(result);
 
         return new QuizResultResponse(correct, word.getMeaning());
+    }
+
+    @Transactional
+    public QuizStartResponse startQuiz(
+        Long userId,
+        Integer count
+    ){
+        // セッション作成
+        QuizSession session =
+            QuizSession.create(userId);
+
+        quizSessionRepository.save(session);
+
+        // 問題生成
+        List<QuizQuestionResponse> questions =
+            createQuestions(
+                userId,
+                count
+            );
+
+        return new QuizStartResponse(
+            session.getId(),
+            questions
+        );
+        
+    }
+
+    private List<QuizQuestionResponse> createQuestions(
+        Long userId,
+        Integer count
+    ) {
+
+        List<Word> quizWords = 
+            wordRepository.findRandomWords(
+                userId,
+                PageRequest.of(0, count)
+            );
+        
+        List<Word> allWords =
+            wordRepository.findByUserIdAndDeletedDateIsNull(
+                userId
+            );
+        
+       return quizWords.stream()
+            .map(word -> 
+                        new QuizQuestionResponse(
+                                    word.getId(),
+                                    word.getWord(),
+                                    generateChoices(
+                                        word,
+                                        allWords
+                                    )
+                        )
+            )
+            .toList();
     }
 }
