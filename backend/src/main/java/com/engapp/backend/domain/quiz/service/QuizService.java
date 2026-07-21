@@ -10,7 +10,9 @@ import com.engapp.backend.domain.word.repository.WordRepository;
 import com.engapp.backend.web.quiz.dto.QuizQuestionResponse;
 import com.engapp.backend.web.quiz.dto.QuizResultRequest;
 import com.engapp.backend.web.quiz.dto.QuizResultResponse;
+import com.engapp.backend.web.quiz.dto.QuizResultSummaryResponse;
 import com.engapp.backend.web.quiz.dto.QuizStartResponse;
+import com.engapp.backend.web.quiz.dto.QuizWrongAnswerResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -76,8 +78,8 @@ public class QuizService {
 
         // ダミー選択肢
         allWords.stream()
-            .filter(word -> !word.getId().equals(answerWord.getId()))
             .map(Word::getMeaning)
+            .filter(meaning -> !meaning.equals(answerWord.getMeaning()))
             .distinct()
             .limit(3)
             .forEach(choices::add);
@@ -177,5 +179,57 @@ public class QuizService {
                         )
             )
             .toList();
+    }
+
+    public QuizResultSummaryResponse getQuizResult(
+        Long userId,
+        Long sessionId
+    ){
+        
+        quizSessionRepository
+            .findByIdAndUserId(sessionId, userId)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("QUIZ-001")
+            );
+
+            List<QuizResult> results =
+                quizResultRepository.findByQuizSessionId(sessionId);
+
+        int total = results.size();
+
+        int correct = (int) results.stream()
+            .filter(QuizResult::getCorrect)
+            .count();
+
+        // 0件対策
+        int accuracy =
+            total == 0 ? 0 : correct * 100 / total;
+
+
+        List<QuizWrongAnswerResponse> wrongAnswers =
+                results.stream()
+                        .filter(result -> !result.getCorrect())
+                        .map(result -> {
+                            Word word = wordRepository
+                                    .findByIdAndUserId(
+                                        result.getWordId(),
+                                        userId)
+                                    .orElseThrow(() ->
+                                            new ResourceNotFoundException("WORD-001")
+                                    );
+
+                            return new QuizWrongAnswerResponse(
+                                    word.getWord(),
+                                    word.getMeaning()
+                            );
+                        })
+                        .toList();
+        return new QuizResultSummaryResponse(
+            total,
+            correct,
+            accuracy,
+            wrongAnswers
+        );
+
     }
 }

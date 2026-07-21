@@ -12,5 +12,6 @@
             "username": "postgres",
             "password": "password"
         }
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "disabled"
 }
