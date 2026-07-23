@@ -3,8 +3,13 @@ import { onMounted, reactive, ref, watch } from "vue";
 import { fetchWordsApi } from "../api/wordApi";
 import type { Word } from "../types/Word";
 import { deleteWordApi } from "../api/wordApi";
+import router from "../router";
 
 const words = ref<Word[]>([]);
+
+const goQuiz = () => {
+    router.push("../quiz");
+};
 
 const searchCondition = reactive({
   keyword: "",
@@ -51,7 +56,7 @@ const deleteWord = async (id: number) => {
 
   } catch (error) {
     console.error(error);
-    errormessage.value = "Failed to delete word.";
+    errorMessage.value = "Failed to delete word.";
   }
 };
 
@@ -69,6 +74,10 @@ onMounted(fetchWords);
 <template>
   <div>
     <h1>Word List</h1>
+
+    <button @click="goQuiz">
+        Quiz
+    </button>
 
     <div>
       <RouterLink to="/words/create">

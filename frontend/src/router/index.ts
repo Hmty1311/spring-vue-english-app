@@ -11,7 +11,10 @@ import WordCreateView
   from "../views/WordCreateView.vue";
 import WordEditView
   from "../views/WordEditView.vue";
-import QuizView from "../views/QuizView.vue";
+import QuizView 
+  from "../views/QuizView.vue";
+import ResultView 
+  from "../views/ResultView.vue";
 
 const routes = [
   {
@@ -37,6 +40,10 @@ const routes = [
   {
     path: "/quiz",
     component:QuizView
+  },
+  {
+    path: "/result/:sessionId",
+    component: ResultView
   }
 
 ];

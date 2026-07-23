@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import { fetchQuizzesApi, registerQuizResultApi } from "../api/quizApi";
+import { registerQuizResultApi, startQuizApi } from "../api/quizApi";
 import type { Quiz } from "../types/Quiz";
 import router from "../router";
 
@@ -14,12 +14,16 @@ const answered = ref(false);
 const correct = ref(false);
 const correctMeaning = ref("");
 
+const sessionId = ref<number>();
+
 const loadQuizzes = async () => {
     loading.value = true;
 
     try {
-        const response = await fetchQuizzesApi(10);
-        quizzes.value = response.data;
+        const response = await startQuizApi(5);
+        
+        sessionId.value = response.data.sessionId;
+        quizzes.value = response.data.questions;
     } finally {
         loading.value = false;
     }
@@ -40,6 +44,7 @@ const submitAnswer = async () => {
 
     try {
         const response = await registerQuizResultApi({
+            sessionId: sessionId.value!,
             wordId: currentQuiz.value.wordId,
             selectedMeaning: selectedMeaning.value
         });
@@ -47,15 +52,6 @@ const submitAnswer = async () => {
         answered.value = true;
         correct.value = response.data.correct;
         correctMeaning.value = response.data.correctMeaning;
-
-        selectedMeaning.value = "";
-
-        if (currentIndex.value === quizzes.value.length - 1) {
-            router.push("/result");
-            return;
-        }
-
-        currentIndex.value++;
 
     } catch (e) {
         console.error(e);
@@ -71,7 +67,7 @@ const nextQuestion = () => {
     correctMeaning.value = "";
 
     if(currentIndex.value === quizzes.value.length -1) {
-        router.push("/result");
+        router.push(`/result/${sessionId.value}`);
         return;
     }
 
