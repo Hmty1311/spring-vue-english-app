@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import { fetchQuizResultApi } from "../api/quizApi";
 import type { QuizResult } from "../types/QuizResult";
-import { useRouter } from "vue-router";
+import PageHeader from "../components/PageHeader.vue";
 
 const router = useRouter();
 
@@ -47,9 +47,11 @@ onMounted(() => {
 </script>
 
 <template>
+    <PageHeader
+        title="Quiz Result"
+        backTo="/quiz"
+    />
     <div>
-        <h1>Quiz Result</h1>
-
         <div v-if="loading">
             Loading...
         </div>

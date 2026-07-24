@@ -4,6 +4,7 @@ import { fetchWordsApi } from "../api/wordApi";
 import type { Word } from "../types/Word";
 import { deleteWordApi } from "../api/wordApi";
 import router from "../router";
+import PageHeader from "../components/PageHeader.vue";
 
 const words = ref<Word[]>([]);
 
@@ -72,13 +73,11 @@ onMounted(fetchWords);
 </script>
 
 <template>
+  <PageHeader
+    title="Word List"
+    backTo="/mode"
+  />
   <div>
-    <h1>Word List</h1>
-
-    <button @click="goQuiz">
-        Quiz
-    </button>
-
     <div>
       <RouterLink to="/words/create">
         Create Word

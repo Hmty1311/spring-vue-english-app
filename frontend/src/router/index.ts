@@ -15,6 +15,8 @@ import QuizView
   from "../views/QuizView.vue";
 import ResultView 
   from "../views/ResultView.vue";
+import ModeSelectView 
+  from "../views/ModeSelectView.vue";
 
 const routes = [
   {
@@ -24,6 +26,10 @@ const routes = [
   {
     path: "/login",
     component: LoginView
+  },
+  {
+    path: "/mode",
+    component: ModeSelectView
   },
   {
     path: "/words",

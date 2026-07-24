@@ -2,6 +2,7 @@
 import axios from "axios";
 import { onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
+import PageHeader from "../components/PageHeader.vue";
 
 import router from "../router";
 
@@ -90,9 +91,11 @@ onMounted(() => {
 </script>
 
 <template>
+    <PageHeader
+        title="Word Edit"
+        backTo="/words"
+    />
     <div>
-        <h1>Edit Word</h1>
-
         <div v-if="errorMessage">
             {{  errorMessage }}
         </div>

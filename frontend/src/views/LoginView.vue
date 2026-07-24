@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { loginApi } from "../api/authApi";
 import client from "../api/client";
+import PageHeader from "../components/PageHeader.vue";
+
 
 const router = useRouter();
 
@@ -16,20 +19,17 @@ const login = async () => {
 
   try {
 
-    const response = await client.post(
-      "/login",
-      {
-        loginId: loginId.value,
-        password: password.value
-      }
-    );
+    const response = await loginApi({
+      loginId: loginId.value,
+      password: password.value
+    });
 
     localStorage.setItem(
       "token",
       response.data.token
     );
 
-    router.push("/words");
+    router.push("/mode");
 
   } catch (error) {
 
@@ -40,9 +40,12 @@ const login = async () => {
 </script>
 
 <template>
+  <PageHeader
+    title="Login"
+    :showBack="false"
+    :showMenu="false"
+  />
   <div>
-    <h1>Login</h1>
-
     <div>
       <input
         v-model="loginId"

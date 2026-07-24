@@ -3,6 +3,7 @@ import axios from "axios";
 import { reactive, ref } from "vue";
 import router from "../router";
 import { createWordApi } from "../api/wordApi";
+import PageHeader from "../components/PageHeader.vue";
 
 const form = reactive({
     word: "",
@@ -43,9 +44,11 @@ const submit = async () => {
 </script>
 
 <template>
+    <PageHeader
+        title="Word Create"
+        backTo="/words"
+    />
     <div>
-        <h1>Create Word</h1>
-
         <div>
             <RouterLink to="/words">
                 Word List

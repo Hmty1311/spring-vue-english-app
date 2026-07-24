@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from "vue";
 import { registerQuizResultApi, startQuizApi } from "../api/quizApi";
 import type { Quiz } from "../types/Quiz";
 import router from "../router";
+import PageHeader from "../components/PageHeader.vue";
 
 const quizzes = ref<Quiz[]>([]);
 const loading = ref(false);
@@ -81,9 +82,11 @@ onMounted(() => {
 </script>
 
 <template>
+    <PageHeader
+        title="Quiz"
+        backTo="/mode"
+    />
     <div>
-        <h1>Quiz</h1>
-
         <div v-if="loading">
             Loading...
         </div>
